@@ -1,0 +1,17 @@
+<div>
+    <select #select multiple size="10" [(ngModel)]="selectFilter">
+        <ng-container *ngFor="let item of listLang">
+            <option [value]="item[1]">{{item[0]}}</option>
+        </ng-container>
+    </select>
+    <div><span>автор</span><input type="text" [(ngModel)]="authorFilter"></div>
+    <div><span>название книги</span><input type="text" [(ngModel)]="titleFilter"></div>
+    <div><span>тема</span><input type="text" [(ngModel)]="subjectFilter"></div>
+    <button (click)="search()">искать</button>
+    <ng-container *ngIf="responseData != null">
+      <ul>
+        <li *ngFor="let item of responseData.results">title {{item.title}}</li>
+      </ul>
+    </ng-container>
+    
+</div>
