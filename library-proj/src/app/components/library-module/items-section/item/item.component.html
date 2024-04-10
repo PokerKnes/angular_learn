@@ -1,0 +1,7 @@
+
+    <ul>
+        <li><img [src]="book.formats['image/jpeg']" /></li>
+        <li>title: {{book.title}}</li>
+        <li>authors: <span *ngFor="let author of book.authors">{{author.name}}</span></li>
+    </ul>
+<p><a routerLink="/book-list">назад</a></p>

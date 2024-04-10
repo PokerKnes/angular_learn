@@ -7,11 +7,7 @@
     <div><span>автор</span><input type="text" [(ngModel)]="authorFilter"></div>
     <div><span>название книги</span><input type="text" [(ngModel)]="titleFilter"></div>
     <div><span>тема</span><input type="text" [(ngModel)]="subjectFilter"></div>
-    <button (click)="search()">искать</button>
-    <ng-container *ngIf="responseData != null">
-      <ul>
-        <li *ngFor="let item of responseData.results">title {{item.title}}</li>
-      </ul>
-    </ng-container>
-    
+    <button (click)="reset(); search('1', true)">искать</button>
+    <app-items-section [itemsList]="responseData"></app-items-section>
+    <app-paginator (loadPage)="search($event)" [countPages]="countPages" [changeSimulate]="changeSimulate"></app-paginator>
 </div>

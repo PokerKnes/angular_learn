@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FilterSection } from './components/library-module/test-request/filter-section.component';
 import { LibraryModule } from './components/library-module/library.module';
 import { GetBooksService } from './services/get-books.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { MainModule } from './components/main/main.module';
+import { EmptyRouteModule } from './components/empty-route/empty-route.module';
+import { HeaderModule } from './components/header/header.module';
+import { RouterOutlet, RouterLink, RouterLinkActive} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -15,12 +17,15 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LibraryModule,
-    HttpClientModule
+    HttpClientModule,
+    MainModule,
+    EmptyRouteModule,
+    HeaderModule,
+    LibraryModule
   ],
   providers: [
-    provideClientHydration(),
-    GetBooksService
+    provideClientHydration()
+    // { provide: HTTP_INTERCEPTORS, useClass: FetchInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

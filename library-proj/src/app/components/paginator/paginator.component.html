@@ -1,0 +1,14 @@
+<ng-container *ngIf="countPages > 1">
+    <button (click)="calcButtonsValues($event, currentPage - 1)" [disabled]="currentPage === firstButtonValue">{{'<'}}</button>
+    <button (click)="calcButtonsValues($event, firstButtonValue)" class="firstPage" [ngClass]="{'active': firstButtonValue === currentPage}">{{firstButtonValue}}</button>
+    <span *ngIf="leftEllipsis">...</span>
+    <button *ngIf="lastButtonValue > 2" (click)="calcButtonsValues($event, changeFirstButton)" [ngClass]="{'active': changeFirstButton === currentPage}">{{changeFirstButton}}</button>
+    <button *ngIf="lastButtonValue > 3" (click)="calcButtonsValues($event, changeSecondButton)" [ngClass]="{'active': changeSecondButton === currentPage}">{{changeSecondButton}}</button>
+    <button *ngIf="lastButtonValue > 4" (click)="calcButtonsValues($event, changeThirdButton)" [ngClass]="{'active': changeThirdButton === currentPage}">{{changeThirdButton}}</button>
+    <span *ngIf="rightEllipsis">...</span>
+    <button (click)="calcButtonsValues($event, lastButtonValue)" class="lastPage" [ngClass]="{'active': lastButtonValue === currentPage}">{{lastButtonValue}}</button>
+    <button (click)="calcButtonsValues($event, currentPage + 1)" [disabled]="currentPage === lastButtonValue">{{'>'}}</button>
+</ng-container>
+
+    
+

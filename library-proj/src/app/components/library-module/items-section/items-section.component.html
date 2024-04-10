@@ -1,0 +1,10 @@
+<ng-container *ngIf="itemsList != null">
+    <ol>
+        <ul *ngFor="let item of itemsList.results">
+            <li><img [src]="item.formats['image/jpeg']" /></li>
+            <li >title: {{item.title}}</li>
+            <li >authors: <span *ngFor="let author of item.authors">{{author.name}}</span></li>
+            <li><p (click)="redirectTo(item.id)">redirect</p></li>
+        </ul>
+    </ol>
+</ng-container>
