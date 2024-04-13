@@ -1,0 +1,11 @@
+<ng-container *ngIf="lastButtonValue != 1 && lastButtonValue != 0 && lastButtonValue != undefined">
+    <button (click)="changePage(currentPage! - 1)" [disabled]="currentPage === firstButtonValue">{{'<'}}</button>
+    <button (click)="changePage(firstButtonValue)" class="firstPage" [ngClass]="{'active': firstButtonValue === currentPage}">{{firstButtonValue}}</button>
+    <span *ngIf="leftEllipsis">...</span>
+    <button *ngIf="lastButtonValue > 2" (click)="changePage(changeFirstButton)" [ngClass]="{'active': changeFirstButton === currentPage}">{{changeFirstButton}}</button>
+    <button *ngIf="lastButtonValue > 3" (click)="changePage(changeSecondButton)" [ngClass]="{'active': changeSecondButton === currentPage}">{{changeSecondButton}}</button>
+    <button *ngIf="lastButtonValue > 4" (click)="changePage(changeThirdButton)" [ngClass]="{'active': changeThirdButton === currentPage}">{{changeThirdButton}}</button>
+    <span *ngIf="rightEllipsis">...</span>
+    <button (click)="changePage(lastButtonValue)" class="lastPage" [ngClass]="{'active': lastButtonValue === currentPage}">{{lastButtonValue}}</button>
+    <button (click)="changePage(currentPage! + 1)" [disabled]="currentPage === lastButtonValue">{{'>'}}</button>
+</ng-container>

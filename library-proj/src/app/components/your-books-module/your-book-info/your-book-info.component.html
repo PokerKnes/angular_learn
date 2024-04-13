@@ -1,0 +1,24 @@
+<ul>
+    @if(book.formats['image/jpeg']) {
+        <li><img [src]="book.formats['image/jpeg']" /></li>
+    }
+    @else {
+        <li><img src="../../../../../assets/defaultBook.png" /></li>
+    }    
+    <li>title: {{book.title}}</li>
+    <li>authors: {{book.authorsFormat}}</li>
+    <li>subjects: {{book.subjectsFormat}}</li>
+    @if(book.formats['application/pdf']) {
+        <li><a [href]="book.formats['application/pdf']" target="_blank">читать</a></li>
+    }
+    @else if(book.formats['text/html']){
+        <li><a [href]="book.formats['text/html']" target="_blank">читать</a></li>
+    }
+    @else {
+        <li><a [href]="book.formats['text/html; charset=iso-8859-1']" target="_blank">читать</a></li>
+    }
+    <li *ngIf="book.formats['application/epub+zip']"><a [href]="book.formats['application/epub+zip']" target="_blank">скачать epub</a></li>
+    <input [(ngModel)]="checkboxValue" type="checkbox" [checked]="checkboxValue" (click)="readHandler(book)"/> <span>{{checkboxValue ? 'прочитана' : 'не прочитана'}}</span>
+    <button (click)="deleteBook(book)">удалить</button>
+</ul>
+<p><a [routerLink]="'/your-books/' + page">назад</a></p>

@@ -1,5 +1,5 @@
 <div>
-    <select #select multiple size="10" [(ngModel)]="selectFilter">
+    <select #select [(ngModel)]="selectFilter">
         <ng-container *ngFor="let item of listLang">
             <option [value]="item[1]">{{item[0]}}</option>
         </ng-container>
@@ -7,7 +7,9 @@
     <div><span>автор</span><input type="text" [(ngModel)]="authorFilter"></div>
     <div><span>название книги</span><input type="text" [(ngModel)]="titleFilter"></div>
     <div><span>тема</span><input type="text" [(ngModel)]="subjectFilter"></div>
-    <button (click)="reset(); search('1', true)">искать</button>
-    <app-items-section [itemsList]="responseData"></app-items-section>
-    <app-paginator (loadPage)="search($event)" [countPages]="countPages" [changeSimulate]="changeSimulate"></app-paginator>
+    <button (click)="searchRedirect('1')">искать</button>
+    <h1 *ngIf="searchInProgress">Ищем книги</h1>
+    <app-items-section *ngIf="!searchInProgress"></app-items-section>
+    <app-paginator *ngIf="!searchInProgress" (loadPage)="searchRedirect($event)"></app-paginator>
+    <p *ngIf="emptyHint">По данному запросу не найдено ни 1 книги. Поменяйте фильтры</p>
 </div>

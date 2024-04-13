@@ -1,0 +1,22 @@
+@if(viewListBooks!.length !== 0) {
+    <ng-container *ngFor="let item of viewListBooks">
+        <ul [ngClass]="{'read': item.read}">
+            @if(item.formats['image/jpeg']) {
+            <li><img [src]="item.formats['image/jpeg']" /></li>
+            }
+            @else {
+            <li><img src="../../../../assets/defaultBook.png" /></li>
+            }
+            <li>title: {{item.title}}</li>
+            <li>authors: {{item.authorsFormat}}</li>
+            <li>
+                <p (click)="redirectTo(item)">redirect</p>
+            </li>
+            <button (click)="deleteBookYourself(item)">удалить книгу из списка</button>
+            <input type="checkbox" [checked]="item.read" (click)="readHandler($event, item)"/> <span>{{item.read ? 'прочитана' : 'не прочитана'}}</span>
+        </ul>
+    </ng-container>
+    <app-your-books-paginator (loadPage)="navigationPages($event)"></app-your-books-paginator>
+} @else {
+    <p>Вы не добавили ни одной книги. Перейдите <a routerLink="/book-list" [queryParams]="query">сюда </a>для поиска литературы.</p>
+}

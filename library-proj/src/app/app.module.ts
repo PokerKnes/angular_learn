@@ -9,6 +9,9 @@ import { MainModule } from './components/main/main.module';
 import { EmptyRouteModule } from './components/empty-route/empty-route.module';
 import { HeaderModule } from './components/header/header.module';
 import { RouterOutlet, RouterLink, RouterLinkActive} from "@angular/router";
+import { YourListBooksModule } from './components/your-books-module/your-list-books.module';
+import { YourListBooksService } from './services/your-list-books.service';
+import { BookAddInfoModule } from './components/add-info-book/item/item.module';
 
 @NgModule({
   declarations: [
@@ -21,11 +24,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive} from "@angular/router";
     MainModule,
     EmptyRouteModule,
     HeaderModule,
-    LibraryModule
+    LibraryModule,
+    YourListBooksModule,
+    BookAddInfoModule
   ],
   providers: [
-    provideClientHydration()
-    // { provide: HTTP_INTERCEPTORS, useClass: FetchInterceptor, multi: true }
+    provideClientHydration(),
+    YourListBooksService,
+    GetBooksService
   ],
   bootstrap: [AppComponent]
 })

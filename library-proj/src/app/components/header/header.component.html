@@ -1,6 +1,7 @@
 <header>
     <nav>
         <a routerLink="/main" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Главная</a>
-        <a routerLink="/book-list" routerLinkActive="active">Поиск книг</a>
+        <a routerLink="/book-list" [queryParams]="query" routerLinkActive="active">Поиск книг</a>
+        <a routerLink="/your-books" routerLinkActive="active">Ваш список книг</a>
     </nav>
 </header>

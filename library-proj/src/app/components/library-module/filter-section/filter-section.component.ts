@@ -1,7 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { GetBooksService } from '../../../services/get-books.service';
-import { PaginatorComponent } from '../../paginator/paginator.component';
-import { ListBooksCache } from '../../../services/books-cache.service';
+import {
+  GetBooksService,
+  IdataTransferGetBooks,
+} from '../../../services/get-books.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 enum Languages {
   Any = '',
@@ -74,38 +76,53 @@ enum Languages {
   Yiddish = 'yi',
 }
 
+export interface IqueryListBooks {
+  languages?: string,
+  topic?: string,
+  search?: string,
+  page?: string
+}
+
+export interface IfilterTransfer {
+  authorFilter: string;
+  titleFilter: string;
+  subjectFilter: string;
+  selectFilter: string;
+  query: IqueryListBooks
+}
+
 @Component({
   selector: 'app-filter-section',
   templateUrl: './filter-section.component.html',
   styleUrl: './filter-section.component.scss',
 })
 export class FilterSection {
-  @ViewChild('select') select: ElementRef | undefined;
-  countPages: number = 1;
+  // @ViewChild('select') select?: ElementRef;
+  emptyHint: boolean = false;
   listLang: [string, string][] = Object.entries(Languages);
   authorFilter: string = '';
   titleFilter: string = '';
   subjectFilter: string = '';
-  selectFilter: string[] = [];
+  selectFilter: string = '';
+  url: string = '';
+  query: IqueryListBooks = {};
+  searchInProgress: boolean = false;
   constructor(
     private dataService: GetBooksService,
-    private cacheService: ListBooksCache
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
-  responseData: any;
-  changeSimulate: boolean = true;
 
-  reset() {
-    this.cacheService.resetPaginatorData();
-    
-  }
-
-  search(page: string, flagCurrentComp?: boolean) {
-   
+  search(page: string, queryParams?: IqueryListBooks) {
+    this.searchInProgress = true
     let resultUrl = '';
-    if (this.cacheService.flagResetPaginatorCache) {
-      let querySelectFilter = this.selectFilter.join(',');
-      let queryAuthorTitle = '';
+    if (page == undefined) {
+      page = '1';
+    }
 
+    let querySelectFilter = this.selectFilter;
+    let queryAuthorTitle = '';
+    if(queryParams == undefined) {
       if (querySelectFilter != '') {
         resultUrl +=
           'https://gutendex.com/books/?languages=' + querySelectFilter;
@@ -142,43 +159,91 @@ export class FilterSection {
             'https://gutendex.com/books/?topic=' + formatSubjectFilter;
         }
       }
-      if (resultUrl == '') {
-        
-        resultUrl = `https://gutendex.com/books/?page=${page}`; 
-      
-        this.cacheService.setUrl(resultUrl.replace(/(?<=page\=)\d+/g, ''));
-      } else {
-        
-        resultUrl += `&page=${page}`;
-        
-        this.cacheService.setUrl(resultUrl.replace(/(?<=page\=)\d+/g, ''));
-      }
     } else {
-      resultUrl = this.cacheService.cacheUrl + page;
-      
+      if(queryParams.languages) {
+        resultUrl +='https://gutendex.com/books/?languages=' + queryParams.languages;
+      }
+      if(queryParams.search) {
+        if (resultUrl != '') {
+          resultUrl += '&search=' + queryParams.search;
+        } else {
+          resultUrl += 'https://gutendex.com/books/?search=' + queryParams.search;
+        }
+      }
+      if(queryParams.topic) {
+        if (resultUrl != '') {
+          resultUrl += '&topic=' + queryParams.topic;
+        } else {
+          resultUrl += 'https://gutendex.com/books/?topic=' + queryParams.topic;
+        }
+      }
     }
-    if ((resultUrl.replace(/(?<=page\=)\d+/g, '') === this.cacheService.cacheUrl) && flagCurrentComp) {
-      this.changeSimulate = !this.changeSimulate;
+    if (resultUrl == '') {
+      resultUrl = `https://gutendex.com/books/?page=${page}`;
+    } else {
+      resultUrl += `&page=${page}`;
     }
 
-    // console.log(`url: ${resultUrl}`);
-    this.dataService.getBooks(resultUrl).subscribe({
-      next: (data: any) => {
-        if (data.count != 0) {
-          this.responseData = data;
-          this.countPages = Math.ceil(data.count / 32);
-          this.cacheService.setCache(data, this.countPages);
-        } else {
-          this.responseData = null;
-          this.countPages = 1;
-        }
-      },
-      error: (error) => console.log(error),
+    this.dataService.getBooks(resultUrl, page);
+    let filterDataCache: IfilterTransfer = {
+      authorFilter: this.authorFilter,
+      titleFilter: this.titleFilter,
+      subjectFilter: this.subjectFilter,
+      selectFilter: this.selectFilter,
+      query: this.query
+    };
+    this.dataService.setDataFilter(filterDataCache);
+  }
+
+  searchRedirect(page: string = '1') {
+    let query: IqueryListBooks = {};
+    if (this.selectFilter != '') query.languages = this.selectFilter;
+    if (this.subjectFilter != '') query.topic = this.subjectFilter.trim()
+    let queryAuthor = this.authorFilter.trim()
+    let queryTitle = this.titleFilter.trim()
+    let queryAuthorTitle = '';
+    if (queryTitle != '' && queryAuthor != '') {
+      queryAuthorTitle = queryTitle + ' ' + queryAuthor;
+    } else if (queryTitle != '') {
+      queryAuthorTitle = queryTitle;
+    } else {
+      queryAuthorTitle = queryAuthor;
+    }
+    if (queryAuthorTitle != '') query.search = queryAuthorTitle;
+    query.page = page;
+    this.query = query;
+
+    this.router.navigate(['/book-list'], {
+      relativeTo: this.route,
+      queryParams: query,
     });
   }
 
   ngOnInit(): void {
-    this.countPages = this.cacheService.countPages;
-    this.responseData = this.cacheService.response;
+    this.dataService
+      .getDataObservable()
+      .subscribe((data: IdataTransferGetBooks) => {
+        this.emptyHint = data.emptyHint;
+        this.url = data.url;
+        this.searchInProgress = data.searchInProgress
+      });
+      this.authorFilter = this.dataService.authorFilter;
+      this.titleFilter = this.dataService.titleFilter;
+      this.subjectFilter = this.dataService.subjectFilter;
+      this.selectFilter = this.dataService.selectFilter;
+      this.query = this.dataService.query;
+      this.emptyHint = this.dataService.emptyHint;
+      this.url = this.dataService.url;
+
+    this.route.queryParams.subscribe((queryParams) => {
+      if (Object.keys(queryParams).length == 0) {
+        queryParams = this.query
+      }
+      let page = queryParams['page'];
+      if(Object.keys(queryParams).length !== 0) {
+        this.search(page, queryParams);
+      }
+    });
+    
   }
 }
