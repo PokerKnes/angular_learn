@@ -57,7 +57,8 @@ export class YourListBooksService {
     }
     this.updateDataView()
   }
-  addBook(book: object) {
+  addBook(book: any) {
+    book.add = true;
     this.listBooks.push(book);
     this.cacheListBooks.push(book);
   }

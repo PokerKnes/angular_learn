@@ -97,7 +97,6 @@ export interface IfilterTransfer {
   styleUrl: './filter-section.component.scss',
 })
 export class FilterSection {
-  // @ViewChild('select') select?: ElementRef;
   emptyHint: boolean = false;
   listLang: [string, string][] = Object.entries(Languages);
   authorFilter: string = '';
@@ -107,6 +106,8 @@ export class FilterSection {
   url: string = '';
   query: IqueryListBooks = {};
   searchInProgress: boolean = false;
+  timeoutId: NodeJS.Timeout | null = null;
+  viewHint: boolean = true;
   constructor(
     private dataService: GetBooksService,
     private route: ActivatedRoute,
@@ -211,9 +212,23 @@ export class FilterSection {
     }
     if (queryAuthorTitle != '') query.search = queryAuthorTitle;
     query.page = page;
+
+    if (this.timeoutId !== null) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+    if (Object.keys(this.query).length != 0 && JSON.stringify(this.query) === JSON.stringify(query)) {
+      this.viewHint = false
+      this.timeoutId = setTimeout(() => {
+      this.timeoutId = null;
+      
+      this.viewHint = true
+      }, 1000);
+      return
+    }
     this.query = query;
 
-    this.router.navigate(['/book-list'], {
+    this.router.navigate(['/book-search'], {
       relativeTo: this.route,
       queryParams: query,
     });

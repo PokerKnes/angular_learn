@@ -1,4 +1,39 @@
 $headerFooterBackColor: #a75c1f;
+$blockBackGroundColor: #e1d9d9;
+$buttonColorActive: #e3cdbb;
+$buttonColor: white;
+
+@mixin button($height) {
+    height: $height;
+    border-radius: 5px;
+    border: 1px solid #7e7c7c;
+    background-color: $buttonColor;
+    transition: background-color 0.7s ease;
+  }
+
+  @mixin buttonHover() {
+    background-color: $buttonColorActive;
+    border: 2px solid black;
+    padding: 0 5px;
+  }
+
+  @mixin main-block() {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: $blockBackGroundColor;
+    border: 1px solid black;
+    width: fit-content;
+    margin: 15px 0;
+  }
+
+  @mixin hint-block() {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: $blockBackGroundColor;
+    border: 2px solid rgb(221, 42, 42);
+    width: fit-content;
+    margin: 15px 0;
+  }
 
 body {
     margin: 0;

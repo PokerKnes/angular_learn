@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { IfilterTransfer, IqueryListBooks } from '../components/library-module/filter-section/filter-section.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { YourListBooksService } from './your-list-books.service';
 export interface IdataTransferGetBooks {
   url: string;
   listBookPage?: any[];
@@ -14,7 +15,7 @@ export interface IdataTransferGetBooks {
 }
 @Injectable()
 export class GetBooksService {
-  constructor(private http: HttpClient, @Inject (Router) private router: Router, @Inject (Router) private route: ActivatedRoute) {}
+  constructor(private yourBooksService: YourListBooksService, private http: HttpClient, @Inject (Router) private router: Router, @Inject (Router) private route: ActivatedRoute) {}
   emptyHint: boolean = false; 
   url: string = '';
   listBookPage?: any[];
@@ -68,9 +69,12 @@ export class GetBooksService {
         data.results.forEach((item: any) => {
           item.authorsFormat = item.authors
             .map((author: any) => author.name)
-            .join('; ');
+            .join('\n');
           item.subjectsFormat = item.subjects.join('; ');
+          let addFlag = false
+          this.yourBooksService.cacheListBooks.forEach(itemServ => {if (itemServ.id === item.id) {addFlag = true} })
           item.read = false;
+          item.add = addFlag;
           item.messages = [];
         });
         this.listBookPage = data.results;

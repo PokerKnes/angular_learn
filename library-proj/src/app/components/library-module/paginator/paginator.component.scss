@@ -1,3 +1,40 @@
+@import '../../../../styles';
+
+
+
+.main-container button, span {
+    margin: 0 5px 0 0;
+}
+
+.button {
+    padding: 5px 11px;
+}
+
+.button:hover {
+    background-color: $headerFooterBackColor;
+}
+
+
+.arrow-button {
+    border-radius: 5px;
+    border: 0;
+    background-color: #a75c1f70;
+    transition: background-color 0.7s ease;
+}
+
+.number-button {
+    border-radius: 5px;
+    border: 0;
+    background-color: $buttonColorActive;
+    transition: background-color 0.7s ease;
+}
+
 .active {
-    border-color: red;
+    background-color: $headerFooterBackColor;
+}
+
+.disabled {
+    display: none;
+    opacity: 70%;
+    color: black;
 }

@@ -18,7 +18,7 @@
     </ng-container>
     <app-your-books-paginator (loadPage)="navigationPages($event)"></app-your-books-paginator>
 } @else if (cacheListBooks.length == 0) {
-    <p>Вы не добавили ни одной книги. Перейдите <a routerLink="/book-list" [queryParams]="query">сюда</a> для поиска литературы.</p>
+    <p>Вы не добавили ни одной книги. Перейдите <a routerLink="/book-search" [queryParams]="query">сюда</a> для поиска литературы.</p>
 } @else {
     <p>{{readFlag ? 'нету ни 1 одной прочитанной книги' : 'нету ни 1ой непрочитанной книги'}}</p>
 }

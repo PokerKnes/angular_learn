@@ -58,7 +58,6 @@ export class ItemComponent implements OnInit {
       this.timeoutId = setTimeout(
         () => {
           this.renderer.setProperty(hintElem, 'textContent', '');
-          console.log(this.timeoutId)
           this.timeoutId = null;
         },
         1000

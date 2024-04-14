@@ -1,4 +1,68 @@
-img {
-    width: 200px;
+@import '../../../../styles';
+
+
+
+.main-container {
+    @include main-block;
+    display: flex;
+    padding: 20px;
+    width: 910.578px;
+    font-size: 18px;
 }
 
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+    margin-left: 20px;
+
+    ul {
+        margin: 0;
+        padding-left: 0;
+        list-style-type: none;
+
+        li {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+    }
+}
+
+.button-add {
+    @include button(auto);
+    font-size: 16px;
+    padding: 8px;
+    width: 89.8281px;
+}
+
+.button-add:hover {
+    @include buttonHover;
+    font-size: 16px;
+    padding: 7px;
+}
+
+.already-add-hint {
+    @include main-block;
+    margin: 0;
+    padding: 6px;
+    border: 2px solid green;
+    font-size: 17px;
+    background-color: $buttonColorActive;
+}
+
+.add-book-conteiner {
+    align-self: end;
+}
+
+.image-container {
+    display: flex;
+
+    img {
+        width: 200px;
+        max-height: 300px;
+    }
+}

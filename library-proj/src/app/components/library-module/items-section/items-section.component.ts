@@ -1,6 +1,5 @@
 import { Input, Component, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ListBooksCache } from '../../../services/books-cache.service';
 import { YourListBooksService } from '../../../services/your-list-books.service';
 import {
   GetBooksService,
@@ -29,28 +28,13 @@ export class ItemsSectionComponent {
     });
   }
 
-  addBookYourself(book: any, event: MouseEvent) {
-    // if (!event.currentTarget) return;
-    let hintElem = (event.currentTarget as HTMLElement).parentElement
-      ?.nextElementSibling;
+  addBookYourself(book: any) {
     let bookId = book.id;
     let findBook = this.yourBooksService.listBooks.find(
       (book) => book.id === bookId
     );
-    if (this.timeoutId !== null) {
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
-    }
-
     if (findBook == undefined) {
       this.yourBooksService.addBook(book);
-    } else {
-      this.renderer.setProperty(hintElem, 'textContent', 'Книга уже добавлена');
-      this.timeoutId = setTimeout(() => {
-        this.renderer.setProperty(hintElem, 'textContent', '');
-        console.log(this.timeoutId);
-        this.timeoutId = null;
-      }, 1000);
     }
   }
 

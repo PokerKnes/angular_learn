@@ -1,19 +1,26 @@
 <ng-container *ngIf="booksList != undefined">
     <ng-container *ngFor="let item of booksList">
-        <ul>
+        <div class="main-container">
             @if(item.formats['image/jpeg']) {
-            <li><img [src]="item.formats['image/jpeg']" /></li>
+            <div class="image-container" (click)="redirectTo(item.id)"><img [src]="item.formats['image/jpeg']" /></div>
             }
             @else {
-            <li><img src="../../../../assets/defaultBook.png" /></li>
+            <div class="image-container" (click)="redirectTo(item.id)"><img src="../../../../assets/defaultBook.png" />
+            </div>
             }
-            <li>title: {{item.title}}</li>
-            <li>authors: {{item.authorsFormat}}</li>
-            <li>
-                <p (click)="redirectTo(item.id)">redirect</p>
-            </li>
-            <button (click)="addBookYourself(item, $event)">добавить себе</button>
-        </ul>
-        <p></p>
+            <div class="info-container">
+                <ul>
+                    <li><b>Название</b>:&#10;{{item.title}}</li>
+                    <li><b>Авторы</b>:&#10;{{item.authorsFormat}}</li>
+                </ul>
+                <div class="add-book-conteiner">
+                    @if (!item.add) {
+                    <button class="button button-add" (click)="addBookYourself(item)">добавить</button> }
+                    @else {
+                    <div class="already-add-hint"><span>добавлена</span></div>
+                    }
+                </div>
+            </div>
+        </div>
     </ng-container>
 </ng-container>

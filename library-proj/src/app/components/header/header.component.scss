@@ -30,12 +30,12 @@ a {
     text-decoration: none;
     color: black;
     font-size: 18px;
+    transition: background-color 0.7s ease;
+    border-radius: 8px;
 }
 
 a:hover {
-    // opacity: 60%;
     border-radius: 8px;
     background-color: #e3cdbb;
     color: #50299b;
-    // border: solid black
 }

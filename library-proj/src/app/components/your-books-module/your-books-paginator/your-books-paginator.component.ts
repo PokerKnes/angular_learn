@@ -68,6 +68,18 @@ export class YourBooksPaginatorComponent {
             this.changeFirstButton = currentPage - 1;
             this.changeSecondButton = currentPage;
             this.changeThirdButton = currentPage + 1;
+          } else if (
+            currentPage - 1 == this.firstButtonValue
+          ) {
+            this.changeFirstButton = currentPage;
+            this.changeSecondButton = currentPage + 1;
+            this.changeThirdButton = currentPage + 2;
+          } else if (
+            currentPage + 1 == this.lastButtonValue
+          ) {
+            this.changeFirstButton = currentPage - 2;
+            this.changeSecondButton = currentPage - 1;
+            this.changeThirdButton = currentPage;
           }
         } else {
           this.changeFirstButton = currentPage - 1;

@@ -9,6 +9,7 @@ import { IdataTransferYourBooks, YourListBooksService } from '../../../services/
 export class YourBooksFiltersComponent {
   readFlag: boolean = false;
   unreadFlag: boolean = false;
+  bookList: any[] = this.yourBooksService.cacheListBooks
   constructor(private yourBooksService: YourListBooksService) {}
 
   reverseCheckBox(event: Event) {

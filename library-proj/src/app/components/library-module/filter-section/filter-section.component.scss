@@ -1,0 +1,88 @@
+@import '../../../../styles';
+
+.main-container {
+    width: fit-content;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: $blockBackGroundColor;
+}
+
+.filter-container {
+    display: flex;
+}
+
+.hint-error {
+    @include hint-block;
+}
+
+.item-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 10px;
+
+    input,
+    select {
+        width: 200px;
+        padding: 6px;
+        border: 1px solid #7e7c7c;
+        border-radius: 5px;
+        color: #333;
+    }
+
+    input {
+        height: 17px;
+    }
+}
+
+span {
+    margin-bottom: 2px;
+}
+
+h4 {
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.button-container {
+    align-content: end;
+}
+
+.hint-empty {
+    @include hint-block;
+}
+
+.button {
+    @include button(31px);
+}
+
+.button:hover {
+    @include buttonHover;
+}
+
+.loader {
+    border: 15px solid $blockBackGroundColor;
+    border-top: 15px solid $headerFooterBackColor;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    top: 40%;
+    left: 19%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    /* Начальное положение */
+    100% {
+        transform: rotate(360deg);
+    }
+
+    /* Конечное положение */
+}

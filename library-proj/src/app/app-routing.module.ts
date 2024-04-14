@@ -12,7 +12,7 @@ const routes: Routes = [
     component: MainComponent,
   },
   {
-    path: 'book-list',
+    path: 'book-search',
     loadChildren: ()=> import('./components/library-module/library.module').then((m)=>m.LibraryModule)
   },
   {

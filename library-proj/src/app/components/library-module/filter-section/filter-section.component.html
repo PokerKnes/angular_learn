@@ -1,15 +1,25 @@
-<div>
-    <select #select [(ngModel)]="selectFilter">
-        <ng-container *ngFor="let item of listLang">
-            <option [value]="item[1]">{{item[0]}}</option>
-        </ng-container>
-    </select>
-    <div><span>автор</span><input type="text" [(ngModel)]="authorFilter"></div>
-    <div><span>название книги</span><input type="text" [(ngModel)]="titleFilter"></div>
-    <div><span>тема</span><input type="text" [(ngModel)]="subjectFilter"></div>
-    <button (click)="searchRedirect('1')">искать</button>
-    <h1 *ngIf="searchInProgress">Ищем книги</h1>
-    <app-items-section *ngIf="!searchInProgress"></app-items-section>
-    <app-paginator *ngIf="!searchInProgress" (loadPage)="searchRedirect($event)"></app-paginator>
-    <p *ngIf="emptyHint">По данному запросу не найдено ни 1 книги. Поменяйте фильтры</p>
+<div class="main-container">
+    <h4>Фильтры</h4>
+    <div class="filter-container">
+        <div class="item-filter">
+            <span>язык</span>
+            <select #select [(ngModel)]="selectFilter">
+                <ng-container *ngFor="let item of listLang">
+                    <option [value]="item[1]">{{item[0]}}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="item-filter"><span>автор</span><input type="text" [(ngModel)]="authorFilter"></div>
+        <div class="item-filter"><span>название</span><input type="text" [(ngModel)]="titleFilter"></div>
+        <div class="item-filter"><span>тема</span><input type="text" [(ngModel)]="subjectFilter"></div>
+        <div class="button-container">
+            <button class="button button-search" (click)="searchRedirect('1')">поиск</button>
+        </div>    
+    </div>
 </div>
+<div [hidden]="viewHint" class="hint-error"><span>указаны те же фильтры запроса</span></div>
+<div class="hint-empty" *ngIf="emptyHint"><span>По данному запросу не найдено ни 1 книги. Поменяйте фильтры</span></div>
+<div *ngIf="searchInProgress" class="loader"></div>
+<!-- <div class="loader"></div> -->
+<app-items-section *ngIf="!searchInProgress"></app-items-section>
+<app-paginator *ngIf="!searchInProgress" (loadPage)="searchRedirect($event)"></app-paginator>
