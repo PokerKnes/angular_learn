@@ -70,7 +70,7 @@ export class GetBooksService {
           item.authorsFormat = item.authors
             .map((author: any) => author.name)
             .join('\n');
-          item.subjectsFormat = item.subjects.join('; ');
+          item.subjectsFormat = item.subjects.join('\n');
           let addFlag = false
           this.yourBooksService.cacheListBooks.forEach(itemServ => {if (itemServ.id === item.id) {addFlag = true} })
           item.read = false;

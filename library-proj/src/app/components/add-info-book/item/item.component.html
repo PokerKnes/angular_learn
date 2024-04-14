@@ -1,25 +1,46 @@
-
-    <ul>
+<div class="item-align-wrapper">
+    <div class="main-image-container">
         @if(book.formats['image/jpeg']) {
-            <li><img [src]="book.formats['image/jpeg']" /></li>
+        <div class="image-container"><img [src]="book.formats['image/jpeg']" /></div>
         }
         @else {
-            <li><img src="../../../../../assets/defaultBook.png" /></li>
-        }    
-        <li>title: {{book.title}}</li>
-        <li>authors: {{book.authorsFormat}}</li>
-        <li>subjects: {{book.subjectsFormat}}</li>
-        @if(book.formats['application/pdf']) {
-            <li><a [href]="book.formats['application/pdf']" target="_blank">читать</a></li>
+        <div class="image-container"><img src="../../../../assets/defaultBook.png" />
+        </div>
         }
-        @else if(book.formats['text/html']){
-            <li><a [href]="book.formats['text/html']" target="_blank">читать</a></li>
-        }
-        @else {
-            <li><a [href]="book.formats['text/html; charset=iso-8859-1']" target="_blank">читать</a></li>
-        }
-        <li *ngIf="book.formats['application/epub+zip']"><a [href]="book.formats['application/epub+zip']" target="_blank">скачать epub</a></li>
-        <button (click)="addBookYourself(book, $event)">добавить себе</button>
-    </ul>
-    <p></p>
-<p><a routerLink="/book-search" [queryParams]="query">назад</a></p>
+        <div class="arrow-block"><a routerLink="/book-search" [queryParams]="query"><img
+                    src="../../../../assets/back-arrow.svg" /></a></div>
+    </div>
+    <div class="main-container">
+        <div class="info-container">
+            <ul>
+                <li><b>Название</b>:&#10;{{book.title}}</li>
+                <li><b>Авторы</b>:&#10;{{book.authorsFormat}}</li>
+                <li><b>Темы</b>:&#10;{{book.subjectsFormat}}</li>
+            </ul>
+        </div>
+        <div class="button-container">
+            <div class="add-book-conteiner">
+                @if (!book.add) {
+                <button class="button button-add" (click)="addBookYourself(book)">добавить</button> }
+                @else {
+                <div class="already-add-hint"><span>добавлена</span></div>
+                }
+            </div>
+            <div class="read-container">
+                <button class="button button-read">
+                    @if(book.formats['application/pdf']) {
+                    <a [href]="book.formats['application/pdf']" target="_blank">читать</a>
+                    }
+                    @else if(book.formats['text/html']){
+                    <a [href]="book.formats['text/html']" target="_blank">читать</a>
+                    }
+                    @else {
+                    <a [href]="book.formats['text/html; charset=iso-8859-1']" target="_blank">читать</a>
+                    }
+                </button>
+            </div>
+            <button class="button button-download" *ngIf="book.formats['application/epub+zip']"><a
+                    [href]="book.formats['application/epub+zip']" target="_blank">скачать</a></button>
+        </div>
+    </div>
+</div>

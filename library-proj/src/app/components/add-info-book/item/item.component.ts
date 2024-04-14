@@ -21,7 +21,6 @@ import { IqueryListBooks } from '../../library-module/filter-section/filter-sect
 export class ItemComponent implements OnInit {
   public book: any;
   query: IqueryListBooks = {};
-  timeoutId: NodeJS.Timeout | null = null;
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -43,25 +42,11 @@ export class ItemComponent implements OnInit {
       this.book = item;
     });
   }
-  addBookYourself(book: any, event: MouseEvent) {
-    let hintElem = (event.currentTarget as HTMLElement).parentElement?.nextElementSibling;
+  addBookYourself(book: any) {
     let bookId = book.id;
     let findBook = this.yourBooksService.listBooks.find((book) => book.id === bookId);
-    if (this.timeoutId !== null) {
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
-    }
     if (findBook == undefined) {
       this.yourBooksService.addBook(book);
-    } else {
-      this.renderer.setProperty(hintElem, 'textContent', 'Книга уже добавлена');
-      this.timeoutId = setTimeout(
-        () => {
-          this.renderer.setProperty(hintElem, 'textContent', '');
-          this.timeoutId = null;
-        },
-        1000
-      );
     }
   }
 }
