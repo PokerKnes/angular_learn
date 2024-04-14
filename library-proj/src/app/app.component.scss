@@ -1,0 +1,17 @@
+.module-content {
+    margin-top: 61px;
+    padding: 0 15px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .module-content {
+    flex: 1;
+  }
+  .footer {
+    display: flex;
+    flex-shrink: 0;
+  }

@@ -1,7 +1,41 @@
-a {
-    margin-right: 4px;
+@import '../../../styles';
+
+header {
+    position: fixed;
+    background-color: $headerFooterBackColor;
+    padding: 1px;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+a.active {
+    color: #50299b;
 }
 
-.active {
-    color: red;
+ul {
+    margin: 12px 0;
+    padding-left: 19px;
+    display: flex;
+    list-style-type: none;
+
+    li {
+        margin-right: 15px;
+        
+    }
+    
+}
+
+a {
+    padding: 4px;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+a:hover {
+    // opacity: 60%;
+    border-radius: 8px;
+    background-color: #e3cdbb;
+    color: #50299b;
+    // border: solid black
 }

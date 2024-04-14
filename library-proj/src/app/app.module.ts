@@ -12,6 +12,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive} from "@angular/router";
 import { YourListBooksModule } from './components/your-books-module/your-list-books.module';
 import { YourListBooksService } from './services/your-list-books.service';
 import { BookAddInfoModule } from './components/add-info-book/item/item.module';
+import { FooterModule } from './components/footer/footer.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BookAddInfoModule } from './components/add-info-book/item/item.module';
     HeaderModule,
     LibraryModule,
     YourListBooksModule,
-    BookAddInfoModule
+    BookAddInfoModule,
+    FooterModule
   ],
   providers: [
     provideClientHydration(),
