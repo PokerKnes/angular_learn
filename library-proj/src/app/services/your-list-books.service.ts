@@ -12,7 +12,6 @@ export interface IdataTransferYourBooks {
 export class YourListBooksService {
   currentPage: number = 1;
   countPages: number = 1;
-  addInfoBook: any;
   listBooks: any[] = [];
   cacheListBooks: any[] = [];
   private dataSubject = new Subject<IdataTransferYourBooks>();
@@ -44,11 +43,9 @@ export class YourListBooksService {
   }
 
   readFilter(action: string) {
-    console.log('readFilter', action, this.listBooks)
     let cache = this.cacheListBooks.slice(0, this.cacheListBooks.length)
     if(action == 'all') {
       this.listBooks = cache
-      console.log('readFilterEnd', action, this.listBooks)
       this.updateDataView()
       return
     }   
@@ -59,10 +56,8 @@ export class YourListBooksService {
       this.listBooks = cache.filter((item) => item.read != true);
     }
     this.updateDataView()
-    console.log('readFilterEnd', action, this.listBooks)
   }
   addBook(book: object) {
-    console.log('addBook')
     this.listBooks.push(book);
     this.cacheListBooks.push(book);
   }
@@ -70,18 +65,33 @@ export class YourListBooksService {
     this.listBooks = this.listBooks.filter((item) => book.id != item.id);
     this.cacheListBooks = this.cacheListBooks.filter((item) => book.id != item.id);
   }
-  getData() {
-    return this.listBooks;
+  addComment(comment: string, id: number) {
+    let indexBook = this.listBooks.findIndex((item) => item.id == id);
+    let date = new Date;
+    let data = {
+      comment: comment,
+      date: date
+    }
+    if (indexBook !== -1) {
+        this.listBooks[indexBook]['messages'].push(data);      
+    } else {
+        console.error('Книга с указанным id не найдена.');
+    }
   }
-  setAddInfoBook(book: any) {
-    this.addInfoBook = book;
+
+  deleteComment(idBook: number, indexComment: number) {
+    let indexBook = this.listBooks.findIndex((item) => item.id == idBook);
+    if (indexBook !== -1) {
+      this.listBooks[indexBook]['messages'].splice(indexComment, 1);
+  } else {
+      console.error('Книга с указанным id не найдена.');
+  }
   }
 
   setRead(id: number, isChecked: boolean) {
     let indexBook = this.listBooks.findIndex((item) => item.id == id);
     if (indexBook !== -1) {
         this.listBooks[indexBook]['read'] = isChecked;
-        this.cacheListBooks[indexBook]['read'] = isChecked;
     } else {
         console.error('Книга с указанным id не найдена.');
     }

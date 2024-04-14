@@ -21,6 +21,7 @@ import { IqueryListBooks } from '../../library-module/filter-section/filter-sect
 export class ItemComponent implements OnInit {
   public book: any;
   query: IqueryListBooks = {};
+  timeoutId: NodeJS.Timeout | null = null;
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -43,21 +44,25 @@ export class ItemComponent implements OnInit {
     });
   }
   addBookYourself(book: any, event: MouseEvent) {
-    // let hintElem = (event.currentTarget as HTMLElement).parentElement?.nextElementSibling;
-    // let bookId = book.id;
-    // let findBook = this.yourBooksService
-    //   .getData()
-    //   .find((book) => book.id === bookId);
-    // if (findBook == undefined) {
-    //   this.yourBooksService.addBook(book);
-    // } else {
-    //   this.renderer.setProperty(hintElem, 'textContent', 'Книга уже добавлена');
-    //   setTimeout(
-    //     () => this.renderer.setProperty(hintElem, 'textContent', ''),
-    //     1000
-    //   );
-    // }
-
-    this.yourBooksService.addBook(book);
+    let hintElem = (event.currentTarget as HTMLElement).parentElement?.nextElementSibling;
+    let bookId = book.id;
+    let findBook = this.yourBooksService.listBooks.find((book) => book.id === bookId);
+    if (this.timeoutId !== null) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+    if (findBook == undefined) {
+      this.yourBooksService.addBook(book);
+    } else {
+      this.renderer.setProperty(hintElem, 'textContent', 'Книга уже добавлена');
+      this.timeoutId = setTimeout(
+        () => {
+          this.renderer.setProperty(hintElem, 'textContent', '');
+          console.log(this.timeoutId)
+          this.timeoutId = null;
+        },
+        1000
+      );
+    }
   }
 }

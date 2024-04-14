@@ -20,5 +20,15 @@
     <li *ngIf="book.formats['application/epub+zip']"><a [href]="book.formats['application/epub+zip']" target="_blank">скачать epub</a></li>
     <input [(ngModel)]="checkboxValue" type="checkbox" [checked]="checkboxValue" (click)="readHandler(book)"/> <span>{{checkboxValue ? 'прочитана' : 'не прочитана'}}</span>
     <button (click)="deleteBook(book)">удалить</button>
+    <input type="checkbox" [(ngModel)]="spoilerToggle"/> <span>показать комменты</span>
+    <div *ngIf="spoilerToggle">
+        <div><textarea [(ngModel)]="comment"  cols="60" rows="15"></textarea><button (click)="addComment(comment)">добавить</button></div>
+        <div *ngFor="let item of book.messages; let i = index">
+            <p>дата: {{item.date | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+            <p>комментарий: {{item.comment}}</p>
+            <button (click)="deleteComment(book.id, i)">удалить комментарий</button>
+        </div>
+        
+    </div>
 </ul>
 <p><a [routerLink]="'/your-books/' + page">назад</a></p>

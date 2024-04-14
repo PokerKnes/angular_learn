@@ -8,21 +8,36 @@ import { YourListBooksService } from '../../../services/your-list-books.service'
   styleUrl: './your-book-info.component.scss'
 })
 export class YourBookInfoComponent {
-  checkboxValue: boolean = this.yourBooksService.addInfoBook.read;
+  checkboxValue?: boolean;
   public book: any;
   page?: string;
+  comment: string = '';
+  spoilerToggle: boolean = false;
     constructor(private yourBooksService: YourListBooksService, private route: ActivatedRoute, private router: Router) {}
     ngOnInit(): void {
-        this.book = this.yourBooksService.addInfoBook
+        let booksList = this.yourBooksService.cacheListBooks;
         this.route.params.subscribe((params) => {
           let page = ''
           if (params['page'] !== undefined) {
             page = params['page']
           }
           this.page = page
+          let item: any = booksList.filter(
+            (item: any) => item.id == params['id']
+          )[0];
+          this.book = item;
+          this.checkboxValue = this.book.read;
         })
     }
 
+    deleteComment(id: number, index: number) {
+      this.yourBooksService.deleteComment(id, index)
+    }
+    addComment(comment: string) {
+      if (comment === '') return
+      this.yourBooksService.addComment(comment, this.book.id)
+      this.comment = ''
+    }
     readHandler(book:any) {
       this.yourBooksService.setRead(book.id, !this.checkboxValue)
     }

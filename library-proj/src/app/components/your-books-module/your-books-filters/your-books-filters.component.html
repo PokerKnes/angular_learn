@@ -1,3 +1,3 @@
 <input [ngModel]="readFlag" type="checkbox" [checked]="readFlag" value="read" (click)="reverseCheckBox($event)"/> <span>прочитанные</span>
 <input [ngModel]="unreadFlag" type="checkbox" [checked]="unreadFlag" value="unread" (click)="reverseCheckBox($event)"/> <span>непрочитанные</span>
-<app-your-list-books (updateFilter)="updateFilter()"></app-your-list-books>
+<app-your-list-books [readFlag]="readFlag" (updateFilter)="updateFilter()"></app-your-list-books>

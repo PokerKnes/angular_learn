@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { YourListBooksComponent } from './your-list-books/your-list-books.component';
 import { YourBookInfoComponent } from './your-book-info/your-book-info.component';
@@ -13,7 +13,7 @@ import { YourBooksFiltersComponent } from './your-books-filters/your-books-filte
 @NgModule({
   declarations: [YourListBooksComponent, YourBooksPaginatorComponent, YourBookInfoComponent, YourBooksFiltersComponent],
   imports: [
-    CommonModule, FormsModule, RouterOutlet, RouterLink, RouterLinkActive, ItemsSectionRoutingModule
+    CommonModule, FormsModule, RouterOutlet, RouterLink, RouterLinkActive, ItemsSectionRoutingModule,DatePipe
   ],
   exports: [YourListBooksComponent, YourBooksPaginatorComponent, YourBookInfoComponent, YourBooksFiltersComponent],
   providers: [ ]

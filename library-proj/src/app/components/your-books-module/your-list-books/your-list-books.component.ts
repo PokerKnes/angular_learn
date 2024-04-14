@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnChanges, Output, EventEmitter, Input } from '@angular/core';
 import { IdataTransferYourBooks, YourListBooksService } from '../../../services/your-list-books.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IqueryListBooks } from '../../library-module/filter-section/filter-section.component';
@@ -10,9 +10,11 @@ import { GetBooksService, IdataTransferGetBooks } from '../../../services/get-bo
   styleUrl: './your-list-books.component.scss'
 })
 export class YourListBooksComponent {
+  @Input() readFlag?: boolean;
   @Output() updateFilter = new EventEmitter();
   query: IqueryListBooks = {}
   listBooks: any;
+  cacheListBooks: any;
   viewListBooks?: any[];
   currentPage: number = 1;
   countBooks: number = 1;
@@ -36,7 +38,6 @@ export class YourListBooksComponent {
   }
 
   readHandler(event: MouseEvent, item: any) {
-    console.log('readHandler', this.listBooks)
     const targetElement = event.target as HTMLInputElement;
     const isChecked = targetElement.checked;
     this.yourBooksService.setRead(item.id, isChecked)
@@ -55,12 +56,13 @@ export class YourListBooksComponent {
     this.yourBooksService
       .getDataObservableView()
       .subscribe((data: IdataTransferYourBooks) => {
-        console.log('initListYour', data.listBooks)
+        this.cacheListBooks = this.yourBooksService.cacheListBooks
         this.listBooks = data.listBooks
         this.currentPage = this.yourBooksService.currentPage!
         this.countPages = Math.ceil(this.listBooks.length / 10);
         this.calcViewListBook(this.currentPage);
     });
+    this.cacheListBooks = this.yourBooksService.cacheListBooks
     this.query = this.dataService.query
     this.route.params.subscribe((params) => {
       let page = 1
@@ -85,10 +87,9 @@ export class YourListBooksComponent {
     let upperRestriction = (page * 10) > this.listBooks.length ? this.listBooks.length : (page * 10);
     let viewList = this.listBooks.slice((page - 1) * 10, upperRestriction)
     this.viewListBooks = viewList
-    console.log('calcViewListBook', viewList)
   }
   public redirectTo(item: any): void {
-    this.yourBooksService.setAddInfoBook(item);
+    // this.yourBooksService.setAddInfoBook(item);
     this.router.navigate([`book-info/${item.id}`], { relativeTo: this.route });
   }
 }

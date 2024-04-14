@@ -71,6 +71,7 @@ export class GetBooksService {
             .join('; ');
           item.subjectsFormat = item.subjects.join('; ');
           item.read = false;
+          item.messages = [];
         });
         this.listBookPage = data.results;
         const countPages = Math.ceil(data.count / 32);
