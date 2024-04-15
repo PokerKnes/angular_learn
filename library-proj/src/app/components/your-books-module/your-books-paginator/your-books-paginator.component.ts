@@ -23,6 +23,7 @@ export class YourBooksPaginatorComponent {
   }
 
   changePage(value: number) {
+    console.log('changePage', value)
     if (this.lastButtonValue == undefined) return;
     if (this.currentPage == value) return;
     this.currentPage = value;

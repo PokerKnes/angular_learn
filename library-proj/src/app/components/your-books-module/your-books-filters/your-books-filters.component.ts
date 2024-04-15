@@ -13,6 +13,7 @@ export class YourBooksFiltersComponent {
   constructor(private yourBooksService: YourListBooksService) {}
 
   reverseCheckBox(event: Event) {
+   
     const targetElement = event.target as HTMLInputElement;
     const targetValue = targetElement.value;
     const targetChecked = targetElement.checked;
@@ -34,6 +35,8 @@ export class YourBooksFiltersComponent {
         this.unreadFlag = !this.unreadFlag;
       }
     }
+    this.yourBooksService.readFlag = this.readFlag;
+    this.yourBooksService.unreadFlag = this.unreadFlag;
     this.readFilter(this.readFlag, this.unreadFlag)
   }
   readFilter(readFlag: boolean, unreadFlag: boolean) {
@@ -54,6 +57,7 @@ export class YourBooksFiltersComponent {
       .getDataObservable()
       .subscribe((data: IdataTransferYourBooks) => {
       });
-    
+      this.readFlag = this.yourBooksService.readFlag;
+      this.unreadFlag = this.yourBooksService.unreadFlag;
   }
 }

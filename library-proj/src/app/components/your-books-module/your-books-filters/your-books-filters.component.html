@@ -1,5 +1,11 @@
-<ng-container *ngIf="bookList.length !== 0">
-    <input [ngModel]="readFlag" type="checkbox" [checked]="readFlag" value="read" (click)="reverseCheckBox($event)"/> <span>прочитанные</span>
-    <input [ngModel]="unreadFlag" type="checkbox" [checked]="unreadFlag" value="unread" (click)="reverseCheckBox($event)"/> <span>непрочитанные</span>    
-</ng-container>
+<div class="main-container" *ngIf="bookList.length !== 0">
+    <div><input class="custom-checkbox" [ngModel]="readFlag" type="checkbox" [checked]="readFlag" value="read"
+            (click)="reverseCheckBox($event)" id="readCheckbox" /> <label for="readCheckbox"
+            class="checkbox-label">прочитанные</label></div>
+    <div>
+        <input class="custom-checkbox" [ngModel]="unreadFlag" type="checkbox" [checked]="unreadFlag" value="unread"
+            (click)="reverseCheckBox($event)" id="unreadCheckbox" /> <label for="unreadCheckbox"
+            class="checkbox-label">непрочитанные</label>
+    </div>
+</div>
 <app-your-list-books [readFlag]="readFlag" (updateFilter)="updateFilter()"></app-your-list-books>

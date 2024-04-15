@@ -1,3 +1,273 @@
+@import '../../../../styles';
+
+.main-container {
+    @include main-block;
+    display: flex;
+    padding: 20px;
+    font-size: 20px;
+    flex-direction: column;
+    width: fit-content;
+    min-width: 558px;
+}
+.item-align-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment-wrapper {
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+.main-image-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.arrow-block {
+    width: fit-content;
+    position: fixed;
+    left: 15px;
+
+    img {
+        width: 80px;
+    }
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+
+    ul {
+        margin: 0;
+        padding-left: 0;
+        list-style-type: none;
+
+        li {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+    }
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container>* {
+    margin-right: 15px
+}
+
+.button-container div:last-child {
+    margin-right: 0
+}
+
+.button {
+    @include button(auto);
+    font-size: 16px;
+    padding: 8px;
+    width: 90px;
+
+    a {
+        text-decoration: none;
+        color: black;
+        display: block;
+        padding: 8px;
+        cursor: context-menu;
+    }
+}
+
+.button-delete, .add-comment-button  {
+    @include button(36px);
+    font-size: 16px;
+    padding: 8px;
+    width: 90px;
+}
+
+.delete-comment-button {
+    @include button(36px);
+    font-size: 16px;
+    padding: 8px;
+    min-width: 90px;
+    align-self: end;
+}
+
+
+.button-delete:hover, .add-comment-button:hover, .delete-comment-button:hover {
+    @include buttonHover();
+}
+
+.button {
+    padding: 0;
+    border-radius: 5px;
+}
+
+.button:hover {
+    @include buttonHover;
+    padding: 0;
+    border-radius: 5px;
+
+    a {
+        padding: 7px;
+    }
+}
+
+.comment-block {
+    @include main-block;
+    display: flex;
+    p:first-child {
+        margin: 0 0 5px 0;
+    }
+    p:last-child {
+        margin: 0;
+    }
+    min-width: 600px;
+    justify-content: space-between;
+}
+
+.add-comment-button:hover {
+    background-color: $headerFooterBackColor;
+    color: white;
+}
+
+.image-container {
+    display: flex;
+
+    img {
+        width: 200px;
+        max-height: 300px;
+    }
+}
+
+.add-comment-button {
+    margin-top: 10px;
+}
+
+.textarea-container {
+    margin: 0 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+}
+
+.label-text-area {
+    font-size: 18px;
+    display: inline-block;
+    margin: 10px 0 5px 0;
+}
+
 textarea {
+    font-size: 16px;
+
+    background-color: #f0f0f0;
+    color: #333;
+
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 8px;
+
+    word-wrap: break-word;
+
+    overflow: auto;
     resize: none;
+}
+
+
+.checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    transition: border-color 0.7s ease;
+    font-size: 19px;
+}
+
+.checkbox-wraper {
+    display: flex;
+    min-width: 152.83px;
+}
+
+.comment-checkbox-wraper {
+    display: flex;
+}
+
+.checkbox-label::before {
+    content: '';
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid black;
+    border-radius: 0.25em;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    background-color: white;
+    transition: background-color 0.7s ease;
+}
+
+.custom-checkbox:checked+label::before {
+    background-color: $buttonColorActive;
+    background-image: url('../../../../assets/checkMark.svg');
+    background-size: cover;
+    border: 2px solid black;
+    width: 32px;
+    height: 32px;
+}
+
+.custom-checkbox:not(:disabled):not(:checked)+label:hover::before {
+    border: 2px solid black;
+    width: 32px;
+    height: 32px;
+    background-color: $buttonColorActive;
+}
+
+.comment-checkbox-label::before {
+    content: '';
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background-image: url('../../../../assets/checkMark.svg');
+    background-size: cover;
+    border-radius: 0.25em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: $buttonColorActive;
+    transition: opacity 0.7s ease;
+}
+
+.comment-checkbox:checked+label::before {
+    background-color: $buttonColorActive;
+    background-image: url('../../../../assets/checkMark.svg');
+    transform: rotate(180deg);
+    background-size: cover;
+}
+
+.comment-checkbox:not(:disabled):not(:checked)+label:hover::before {
+    opacity: 40%;
+}
+
+.comment-checkbox:not(:disabled):checked+label:hover::before {
+    opacity: 40%;
+}
+
+.container-again {
+    display: flex;
+    flex-direction: column;
 }

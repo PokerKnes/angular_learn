@@ -60,7 +60,7 @@ export class YourListBooksComponent {
         this.listBooks = data.listBooks
         this.currentPage = this.yourBooksService.currentPage!
         this.countPages = Math.ceil(this.listBooks.length / 10);
-        this.calcViewListBook(this.currentPage);
+        this.calcViewListBook(this.currentPage);       
     });
     this.cacheListBooks = this.yourBooksService.cacheListBooks
     this.query = this.dataService.query
@@ -69,7 +69,7 @@ export class YourListBooksComponent {
       if (Object.keys(params).length !== 0) {
         page = +params['page']
       }
-      this.listBooks = this.yourBooksService.cacheListBooks
+      this.listBooks = this.yourBooksService.listBooks
       this.countPages = Math.ceil(this.listBooks.length / 10);
       this.calcViewListBook(page);
     });
@@ -88,8 +88,7 @@ export class YourListBooksComponent {
     let viewList = this.listBooks.slice((page - 1) * 10, upperRestriction)
     this.viewListBooks = viewList
   }
-  public redirectTo(item: any): void {
-    // this.yourBooksService.setAddInfoBook(item);
+    public redirectTo(item: any): void {
     this.router.navigate([`book-info/${item.id}`], { relativeTo: this.route });
   }
 }

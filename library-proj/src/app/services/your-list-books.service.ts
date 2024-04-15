@@ -10,6 +10,8 @@ export interface IdataTransferYourBooks {
 
 @Injectable()
 export class YourListBooksService {
+  unreadFlag: boolean = false;
+  readFlag: boolean = false;
   currentPage: number = 1;
   countPages: number = 1;
   listBooks: any[] = [];

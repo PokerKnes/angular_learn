@@ -1,4 +1,4 @@
-@if(viewListBooks!.length !== 0) {
+<!-- @if(viewListBooks!.length !== 0) {
     <ng-container *ngFor="let item of viewListBooks">
         <ul [ngClass]="{'read': item.read}">
             @if(item.formats['image/jpeg']) {
@@ -21,4 +21,33 @@
     <p>Вы не добавили ни одной книги. Перейдите <a routerLink="/book-search" [queryParams]="query">сюда</a> для поиска литературы.</p>
 } @else {
     <p>{{readFlag ? 'нету ни 1 одной прочитанной книги' : 'нету ни 1ой непрочитанной книги'}}</p>
+} -->
+
+@if(viewListBooks!.length !== 0) {
+    <ng-container *ngFor="let item of viewListBooks; let i =index">
+        <div class="main-container" [ngClass]="{'read': item.read}">
+            @if(item.formats['image/jpeg']) {
+            <div class="image-container" (click)="redirectTo(item)"><img [src]="item.formats['image/jpeg']" /></div>
+            }
+            @else {
+            <div class="image-container" (click)="redirectTo(item)"><img src="../../../../assets/defaultBook.png" />
+            </div>
+            }
+            <div class="info-container">
+                <ul>
+                    <li><b>Название</b>:&#10;{{item.title}}</li>
+                    <li><b>Авторы</b>:&#10;{{item.authorsFormat}}</li>
+                </ul>
+                <div class="buttons-conteiner">
+                    <button class="delete-button" (click)="deleteBookYourself(item)">удалить книгу из списка</button>
+                    <div class="checkbox-wraper"><input class="custom-checkbox" [attr.id]="'checkbox-' + i" type="checkbox" [checked]="item.read" (click)="readHandler($event, item)"/><label [attr.for]="'checkbox-' + i" class="checkbox-label">{{item.read ? 'прочитана' : 'не прочитана'}}</label></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+<app-your-books-paginator (loadPage)="navigationPages($event)"></app-your-books-paginator>
+} @else if (cacheListBooks.length == 0) {
+    <div class="not-exist-hint hint"><span>Вы не добавили ни одной книги. Перейдите <a routerLink="/book-search" [queryParams]="query">сюда</a> для поиска литературы.</span></div>
+} @else {
+    <div class="read-hint hint"><span>{{readFlag ? 'Нету ни 1 одной прочитанной книги.' : 'Нету ни 1ой непрочитанной книги.'}}</span></div>
 }

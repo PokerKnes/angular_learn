@@ -1,4 +1,4 @@
-<ul>
+<!-- <ul>
     @if(book.formats['image/jpeg']) {
         <li><img [src]="book.formats['image/jpeg']" /></li>
     }
@@ -31,4 +31,76 @@
         
     </div>
 </ul>
-<p><a [routerLink]="'/your-books/' + page">назад</a></p>
+<p><a [routerLink]="'/your-books/' + page">назад</a></p> -->
+
+
+<div class="item-align-wrapper">
+    <div class="main-image-container">
+        @if(book.formats['image/jpeg']) {
+        <div class="image-container"><img [src]="book.formats['image/jpeg']" /></div>
+        }
+        @else {
+        <div class="image-container"><img src="../../../../assets/defaultBook.png" />
+        </div>
+        }
+        <div class="arrow-block"><a [routerLink]="'/your-books/' + page"><img
+                    src="../../../../assets/back-arrow.svg" /></a></div>
+    </div>
+    <div class="container-again">
+        <div class="main-container">
+            <div class="info-container">
+                <ul>
+                    <li><b>Название</b>:&#10;{{book.title}}</li>
+                    <li><b>Авторы</b>:&#10;{{book.authorsFormat}}</li>
+                    <li><b>Темы</b>:&#10;{{book.subjectsFormat}}</li>
+                </ul>
+            </div>
+            <div class="button-container">
+                <div class="delete-book-conteiner">
+                    <button class="button-delete" (click)="deleteBook(book)">удалить</button>
+                </div>
+                <div class="read-container">
+                    <button class="button button-read">
+                        @if(book.formats['application/pdf']) {
+                        <a [href]="book.formats['application/pdf']" target="_blank">читать</a>
+                        }
+                        @else if(book.formats['text/html']){
+                        <a [href]="book.formats['text/html']" target="_blank">читать</a>
+                        }
+                        @else {
+                        <a [href]="book.formats['text/html; charset=iso-8859-1']" target="_blank">читать</a>
+                        }
+                    </button>
+                </div>
+                <button class="button button-download" *ngIf="book.formats['application/epub+zip']"><a
+                        [href]="book.formats['application/epub+zip']" target="_blank">скачать</a></button>
+                <div class="checkbox-wraper"><input [(ngModel)]="checkboxValue" type="checkbox"
+                        [checked]="checkboxValue" (click)="readHandler(book)" class="checkbox custom-checkbox"
+                        id="checkbox"><label for="checkbox" class="label checkbox-label">{{book.read ? 'прочитана' : 'не прочитана'}}</label></div>
+            </div>
+        </div>
+
+        <div class="comment-checkbox-wraper"><input [(ngModel)]="spoilerToggle" type="checkbox"
+                class="checkbox comment-checkbox" id="comment-checkbox"><label for="comment-checkbox"
+                class="label comment-checkbox-label"></label></div>
+    </div>
+
+    <div class="comment-container">
+
+        <ng-container *ngIf="spoilerToggle">
+            <label for="text-area" class="label-text-area">Комментарии:</label>
+            <div class="textarea-container" id="text-area">
+                <textarea [(ngModel)]="comment" cols="60" rows="15"></textarea>
+                <button class="add-comment-button button" (click)="addComment(comment)">добавить</button>
+            </div>
+            <div class="comment-block" *ngFor="let item of book.messages; let i = index">
+                <div class="comment-wrapper">
+                    <p>Дата: {{item.date | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                    <p>комментарий: {{item.comment}}</p>
+                </div>
+                <button class="delete-comment-button button" (click)="deleteComment(book.id, i)">удалить</button>
+            </div>
+        </ng-container>
+    </div>
+
+</div>
