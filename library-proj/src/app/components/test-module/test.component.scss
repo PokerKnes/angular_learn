@@ -1,0 +1,34 @@
+@import '../../../styles';
+
+footer {
+    background-color: $headerFooterBackColor;
+    width: 100%;
+    border-top: 1px solid black;
+    margin: 15px 0 0 0;
+    // position: absolute;
+    // bottom: 0;
+}
+
+.grid-container {
+    padding: 15px 30px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, max-content)); /* 3 столбца с равной шириной */
+    grid-auto-flow: column dense;
+    row-gap: 10px;
+    column-gap: 60px; /* Пространство между элементами */
+    grid-template-rows: repeat(5, minmax(0, max-content));
+  }
+  
+  .grid-item {
+    text-align: start;
+  }
+
+  img {
+    max-width: 100px;
+    margin-right: 55px;
+  }
+  .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

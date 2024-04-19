@@ -5,6 +5,7 @@ import { FilterSection } from './components/library-module/filter-section/filter
 import { EmptyRouteComponent } from './components/empty-route/empty-route.component';
 import { YourListBooksComponent } from './components/your-books-module/your-list-books/your-list-books.component';
 import { ItemComponent } from './components/add-info-book/item/item.component';
+import { TestComponent } from './components/test-module/test.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'your-books',
     loadChildren: ()=> import('./components/your-books-module/your-list-books.module').then((m)=>m.YourListBooksModule)
+  },
+  {
+    path: 'test',
+    component: TestComponent,
   },
   {
     path: '**',

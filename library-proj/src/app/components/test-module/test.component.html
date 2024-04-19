@@ -1,0 +1,6 @@
+<p *ngIf="toogle; else empty"> hi</p>
+<button (click)="toogle = !toogle">click</button>
+
+<ng-template #empty>
+    <p>bye</p>
+</ng-template>

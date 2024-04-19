@@ -14,11 +14,7 @@
                     <li><b>Авторы</b>:&#10;{{item.authorsFormat}}</li>
                 </ul>
                 <div class="add-book-conteiner">
-                    @if (!item.add) {
-                    <button class="button button-add" (click)="addBookYourself(item)">добавить</button> }
-                    @else {
-                    <div class="already-add-hint"><span>добавлена</span></div>
-                    }
+                    <button class="button button-add" [disabled]="!item.add ? false : true" (click)="addBookYourself(item)">{{!item.add ? 'добавить' : 'добавлено'}}</button>
                 </div>
             </div>
         </div>

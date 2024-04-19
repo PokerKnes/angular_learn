@@ -13,6 +13,7 @@ import { YourListBooksModule } from './components/your-books-module/your-list-bo
 import { YourListBooksService } from './services/your-list-books.service';
 import { BookAddInfoModule } from './components/add-info-book/item/item.module';
 import { FooterModule } from './components/footer/footer.module';
+import { TestModule } from './components/test-module/test.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FooterModule } from './components/footer/footer.module';
     LibraryModule,
     YourListBooksModule,
     BookAddInfoModule,
-    FooterModule
+    FooterModule,
+    TestModule
   ],
   providers: [
     provideClientHydration(),

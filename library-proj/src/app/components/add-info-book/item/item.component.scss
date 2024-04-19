@@ -67,7 +67,7 @@
     @include button(auto);
     font-size: 16px;
     padding: 8px;
-    width: 90px;
+    width: 98.0312px;
 
     a {
         text-decoration: none;
@@ -94,20 +94,18 @@
     }
 }
 
-.button-add:hover {
+.button-add:disabled {
+    border: 2px solid green;
+    color: black;
+    padding: 7px;
+    background-color: $buttonColorActive;
+}
+
+.button-add:not(:disabled):hover {
     @include buttonHover;
-    font-size: 16px;
     padding: 7px;
 }
 
-.already-add-hint {
-    @include main-block;
-    margin: 0;
-    padding: 6px;
-    border: 2px solid green;
-    font-size: 17px;
-    background-color: $buttonColorActive;
-}
 
 .add-book-conteiner {
     align-self: end;

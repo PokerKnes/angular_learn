@@ -20,11 +20,7 @@
         </div>
         <div class="button-container">
             <div class="add-book-conteiner">
-                @if (!book.add) {
-                <button class="button button-add" (click)="addBookYourself(book)">добавить</button> }
-                @else {
-                <div class="already-add-hint"><span>добавлена</span></div>
-                }
+                <button class="button button-add" [disabled]="!book.add ? false : true" (click)="addBookYourself(book)">{{!book.add ? 'добавить' : 'добавлено'}}</button>
             </div>
             <div class="read-container">
                 <button class="button button-read">
